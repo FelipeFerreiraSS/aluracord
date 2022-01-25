@@ -1,6 +1,8 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json';
 
+import React from 'react';
+import { useRouter } from 'next/router';
 
 
 function Titulo(props) {
@@ -33,7 +35,8 @@ function Titulo(props) {
 // export default HomePage
 
 export default function PaginaInicial() {
-  const username = 'felipeferreirass';
+  const [username, setUsername] = React.useState('felipeferreirass');
+  const roteamento = useRouter();
 
   return (
     <>
@@ -63,6 +66,12 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (infosDoEvento) {
+              infosDoEvento.preventDefault();
+              console.log('Alguém submeteu o form');
+              roteamento.push('/chat');
+              // window.location.href = '/chat';
+            }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -73,7 +82,29 @@ export default function PaginaInicial() {
               {appConfig.name}
             </Text>
 
+            {/* <input
+              type="text"
+              value={username}
+              onChange={function (event) {
+                console.log('usuario digitou', event.target.value);
+                // Onde ta o valor?
+                const valor = event.target.value;
+                // Trocar o valor da variavel
+                // através do React e avise quem precisa
+                setUsername(valor);
+              }}
+            /> */}
+
             <TextField
+            	value={username}
+              onChange={function (event) {
+                console.log('usuario digitou', event.target.value);
+                // Onde ta o valor?
+                const valor = event.target.value;
+                // Trocar o valor da variavel
+                // através do React e avise quem precisa
+                setUsername(valor);
+              }}
               fullWidth
               textFieldColors={{
                 neutral: {
